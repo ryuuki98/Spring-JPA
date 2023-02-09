@@ -31,18 +31,30 @@ class MemberServiceIntegrationTest {
         member1.setName("홍길동");
         member1.setId(0L);
         */
+        long start = System.currentTimeMillis();
+        
+        try {
 
-        //given - 인풋데이터
-        Member member = new Member();
-        member.setName("spring");
+            //given - 인풋데이터
+            Member member = new Member();
+            member.setName("spring");
 
-        //when - 실행문
-        long saveId = memberService.join((member));
+            //when - 실행문
+            long saveId = memberService.join((member));
 
-        //then - 검증부분
-        Member findmember = memberService.findOne(saveId).get();
+            //then - 검증부분
+            Member findmember = memberService.findOne(saveId).get();
 
-        assertThat(member.getId()).isEqualTo(findmember.getId());
+            assertThat(member.getId()).isEqualTo(findmember.getId());
+
+
+        }finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start ;
+
+            System.out.println("회원가입에 걸린 시간은 " + timeMs + "Ms 입니다");
+
+        }
 
 
 
