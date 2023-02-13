@@ -62,21 +62,25 @@ class MemberServiceIntegrationTest {
 
 
     }
-
     @Test
     public void 중복_회원_예외(){
-        //given
-        Member member1 = new Member();
-        member1.setName("hello");
-        Member member2 = new Member();
-        member2.setName("hello");
 
-        //when
-        memberService.join(member1);
+        Long start = System.currentTimeMillis();
 
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));// 멤버2를 가입 시켰을 때, IllegalStateException이 발생해야함
+        try {
 
-        assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+            //given
+            Member member1 = new Member();
+            member1.setName("hello");
+            Member member2 = new Member();
+            member2.setName("hello");
+
+            //when
+            memberService.join(member1);
+
+            IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));// 멤버2를 가입 시켰을 때, IllegalStateException이 발생해야함
+
+            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 
 
         /*try {
@@ -87,9 +91,19 @@ class MemberServiceIntegrationTest {
 
         }*/
 
-        //then
+            //then
 
 
+
+
+        }finally {
+
+            Long finish = System.currentTimeMillis();
+
+            long timeMs = finish - start;
+
+            System.out.println("중복회원 예약은 " + timeMs + "Ms 입니다.");
+        }
 
 
     }
